@@ -66,7 +66,7 @@ class ImageDetectionSet(Dataset):
 
     def __getitem__(self, idx):
 
-        image = read_image(os.path.join(self.data_path, self.images_js[f"{idx}"]["file_name"])).to(th.float32)
+        image = read_image(os.path.join(self.data_path, self.images_js[f"{idx}"]["file_name"])).to(th.float32).T
         if not self.tranform is None:
             image = self.tranform(image)
 
@@ -81,52 +81,4 @@ class ImageDetectionSet(Dataset):
 
 
 
-
-
-
-
-if __name__ == "__main__":
-
-    data_dir = "C:\\Users\\1\\Downloads\\lateralidade.v16i.coco"
-    transforms = Compose([
-        #Resize(size=(128, 128)),
-        Normalize(mean=[0.128, 0.027, 0.341],
-                  std=[0.128, 0.27, 0.341])
-    ])
-
-    trainset = ImageDetectionSet(
-        data_dir=data_dir,
-        data_split="train",
-        # transform=transforms
-    )
-    testset = ImageDetectionSet(
-        data_dir=data_dir,
-        data_split="test",
-        #transform=transforms
-    )
-
-    train_loader = DataLoader(
-        dataset=trainset,
-        batch_size=32,
-        shuffle=True
-    )
-
-    test_loader = DataLoader(
-        dataset=trainset,
-        batch_size=32,
-        shuffle=True
-    )
-    for sample in train_loader:
-        break
-    
-
-   
-    plt.style.use("dark_background")
-    _, axis = plt.subplots()
-
-    image = sample[0].T / 255.0
-    print(image.size())
-    # print(image.T.size())
-    # axis.imshow(image)
-    # plt.show()
         

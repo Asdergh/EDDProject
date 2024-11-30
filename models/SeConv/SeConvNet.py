@@ -101,28 +101,3 @@ class SeConvNet(Model):
     def call(self, inputs):
         return self.total_model_(inputs)
 
-if __name__ == "__main__":
-
-    test_data = np.random.normal(0, 1.0, (100, 128, 128, 3))
-    test_labels = np.random.randint(0, 7, 100)
-    
-    from tensorflow.keras.optimizers import Adam
-    from tensorflow.keras.losses import BinaryCrossentropy
-    model = SeConvNet(input_sh=(128, 128, 3))
-    model.compile(
-        optimizer=Adam(learning_rate=0.01),
-        loss=BinaryCrossentropy()
-    )
-
-    # model_history = model.fit(
-    #     test_data,
-    #     test_labels,
-    #     batch_size=32,
-    #     epochs=10
-    # )
-
-    results = model.train_step(inputs=(test_data[:10], np.expand_dims(test_labels[:10], axis=-1)))
-
-    # conv_out = Conv(out_channels=128)(test_data)
-    # se_out = Se(in_channels=128)(conv_out)
-    # print(se_out.shape)
